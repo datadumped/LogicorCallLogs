@@ -1,0 +1,58 @@
+@page "/logicor-support-call-logs"
+
+<PageTitle>LogicorSupportCallLogs</PageTitle>
+<RadzenStack>
+    <RadzenRow AlignItems="AlignItems.Center">
+        <RadzenColumn Size="12" SizeMD="6">
+            <RadzenText Text="Support Call Logs" TextStyle="TextStyle.H3" TagName="TagName.H1" style="margin: 0" />
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeMD="6">
+            <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.End" Gap="0.5rem">
+                <RadzenSplitButton Icon="get_app" Text="Export" Click="@ExportClick" Variant="Variant.Flat" Shade="Shade.Lighter">
+                    <RadzenSplitButtonItem Text="Excel" Value="xlsx" />
+                    <RadzenSplitButtonItem Text="CSV" Value="csv" />
+                </RadzenSplitButton>
+                <RadzenButton Icon="add_circle_outline" Text="Add" Click="@AddButtonClick" Variant="Variant.Flat" />
+            </RadzenStack>
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenRow>
+      <RadzenColumn SizeMD=12>
+        <RadzenDataGrid @ref="grid0" ColumnWidth="200px"  AllowFiltering="true" FilterMode="FilterMode.Advanced" AllowPaging="true" AllowSorting="true" ShowPagingSummary="true" PageSizeOptions=@(new int[]{5, 10, 20, 30})
+            Data="@logicorSupportCallLogs"    TItem="LogicorSupportCalls.Models.SQL2022_1033788_pnj.LogicorSupportCallLog" RowSelect="@EditRow" >
+            <Columns>
+                <RadzenDataGridColumn TItem="LogicorSupportCalls.Models.SQL2022_1033788_pnj.LogicorSupportCallLog" Property="Id" Title="Id">
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="LogicorSupportCalls.Models.SQL2022_1033788_pnj.LogicorSupportCallLog" Property="CustomerName" Title="Customer Name">
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="LogicorSupportCalls.Models.SQL2022_1033788_pnj.LogicorSupportCallLog" Property="SupportAgent" Title="Support Agent">
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="LogicorSupportCalls.Models.SQL2022_1033788_pnj.LogicorSupportCallLog" Property="CallDuration" Title="Call Duration">
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="LogicorSupportCalls.Models.SQL2022_1033788_pnj.LogicorSupportCallLog" Property="CallDate" Title="Call Date">
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="LogicorSupportCalls.Models.SQL2022_1033788_pnj.LogicorSupportCallLog" Property="CallTime" Title="Call Time">
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="LogicorSupportCalls.Models.SQL2022_1033788_pnj.LogicorSupportCallLog" Property="ZendeskTicket" Title="Zendesk Ticket">
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="LogicorSupportCalls.Models.SQL2022_1033788_pnj.LogicorSupportCallLog" Property="TicketLink" Title="Ticket Link">
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="LogicorSupportCalls.Models.SQL2022_1033788_pnj.LogicorSupportCallLog" Property="Issue" Title="Issue">
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="LogicorSupportCalls.Models.SQL2022_1033788_pnj.LogicorSupportCallLog" Property="Description" Title="Description">
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="LogicorSupportCalls.Models.SQL2022_1033788_pnj.LogicorSupportCallLog" Filterable="false" Sortable="false" Width="70px" TextAlign="TextAlign.Center">
+                    <Template Context="logicorSupportCallLog">
+
+                        <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Size="ButtonSize.Medium"
+                            Shade="Shade.Lighter" Variant="Variant.Flat"
+                            Click=@(args => GridDeleteButtonClick(args, logicorSupportCallLog)) @onclick:stopPropagation="true" />
+                    </Template>
+                </RadzenDataGridColumn>
+            </Columns>
+
+        </RadzenDataGrid>
+
+    </RadzenColumn>
+  </RadzenRow>
+</RadzenStack>
