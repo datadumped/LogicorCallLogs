@@ -1,10 +1,8 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Radzen;
 using Microsoft.EntityFrameworkCore;
+using Blazored.LocalStorage;
+using LogicorSupportCalls.Shared;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
@@ -22,7 +20,21 @@ builder.Services.AddDbContext<LogicorSupportCalls.Data.SQL2022_1033788_pnjContex
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("SQL2022_1033788_pnjConnection"));
 });
+
+string serilogConnectionString = builder.Configuration.GetConnectionString("SerilogConnection");
+
+Log.Logger = new LoggerConfiguration()
+               .WriteTo.MSSqlServer(
+                   connectionString: serilogConnectionString,
+                   tableName: "LogicorLogs",
+                   autoCreateSqlTable: true)
+               .CreateLogger();
+
+builder.Services.AddScoped<AppState>();
+builder.Services.AddBlazoredLocalStorage();
+
 var app = builder.Build();
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {

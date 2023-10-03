@@ -1,4 +1,6 @@
 @page "/logicor-support-call-logs"
+@inherits AuthorizedComponentBase
+@inject IJSRuntime js
 
 <PageTitle>LogicorSupportCallLogs</PageTitle>
 <RadzenStack>
@@ -19,23 +21,26 @@
     <RadzenRow>
       <RadzenColumn SizeMD=12>
         <RadzenDataGrid @ref="grid0" ColumnWidth="200px"  AllowFiltering="true" FilterMode="FilterMode.Advanced" AllowPaging="true" AllowSorting="true" ShowPagingSummary="true" PageSizeOptions=@(new int[]{5, 10, 20, 30})
-            Data="@logicorSupportCallLogs"    TItem="LogicorSupportCalls.Models.SQL2022_1033788_pnj.LogicorSupportCallLog" RowSelect="@EditRow" >
+            Data="@logicorSupportCallLogs"    TItem="LogicorSupportCalls.Models.SQL2022_1033788_pnj.LogicorSupportCallLog" RowSelect="@EditRow" PageSize="20">
             <Columns>
-                <RadzenDataGridColumn TItem="LogicorSupportCalls.Models.SQL2022_1033788_pnj.LogicorSupportCallLog" Property="Id" Title="Id">
+                <RadzenDataGridColumn TItem="LogicorSupportCalls.Models.SQL2022_1033788_pnj.LogicorSupportCallLog" Width="70px" Property="Id" Title="Id">
                 </RadzenDataGridColumn>
                 <RadzenDataGridColumn TItem="LogicorSupportCalls.Models.SQL2022_1033788_pnj.LogicorSupportCallLog" Property="CustomerName" Title="Customer Name">
                 </RadzenDataGridColumn>
                 <RadzenDataGridColumn TItem="LogicorSupportCalls.Models.SQL2022_1033788_pnj.LogicorSupportCallLog" Property="SupportAgent" Title="Support Agent">
                 </RadzenDataGridColumn>
-                <RadzenDataGridColumn TItem="LogicorSupportCalls.Models.SQL2022_1033788_pnj.LogicorSupportCallLog" Property="CallDuration" Title="Call Duration">
+                <RadzenDataGridColumn TItem="LogicorSupportCalls.Models.SQL2022_1033788_pnj.LogicorSupportCallLog" Width="150px" Property="CallDuration" Title="Call Duration">
                 </RadzenDataGridColumn>
                 <RadzenDataGridColumn TItem="LogicorSupportCalls.Models.SQL2022_1033788_pnj.LogicorSupportCallLog" Property="CallDate" Title="Call Date">
                 </RadzenDataGridColumn>
-                <RadzenDataGridColumn TItem="LogicorSupportCalls.Models.SQL2022_1033788_pnj.LogicorSupportCallLog" Property="CallTime" Title="Call Time">
+                <RadzenDataGridColumn TItem="LogicorSupportCalls.Models.SQL2022_1033788_pnj.LogicorSupportCallLog" Property="CallTime" Title="Call Time" Visible="false">
                 </RadzenDataGridColumn>
-                <RadzenDataGridColumn TItem="LogicorSupportCalls.Models.SQL2022_1033788_pnj.LogicorSupportCallLog" Property="ZendeskTicket" Title="Zendesk Ticket">
+                <RadzenDataGridColumn TItem="LogicorSupportCalls.Models.SQL2022_1033788_pnj.LogicorSupportCallLog" Width="150px" Property="ZendeskTicket" Title="Zendesk Ticket">
                 </RadzenDataGridColumn>
                 <RadzenDataGridColumn TItem="LogicorSupportCalls.Models.SQL2022_1033788_pnj.LogicorSupportCallLog" Property="TicketLink" Title="Ticket Link">
+                    <Template Context="data">
+                        <a href="@data.TicketLink" target="_blank">@data.TicketLink</a>
+                    </Template>
                 </RadzenDataGridColumn>
                 <RadzenDataGridColumn TItem="LogicorSupportCalls.Models.SQL2022_1033788_pnj.LogicorSupportCallLog" Property="Issue" Title="Issue">
                 </RadzenDataGridColumn>

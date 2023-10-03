@@ -1,0 +1,61 @@
+﻿@page "/Login"
+@layout EmptyLayout
+@inject NavigationManager NavManager
+@inject AppState AppState
+@inject IJSRuntime js
+
+<div class="full-screen">
+
+    <div class="login-form">
+        <EditForm Model="userInput" OnValidSubmit="HandleValidSubmit">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+            <div>
+                <h3>Logicor Support Login</h3>
+            </div>
+            <div>
+                <RadzenLabel Text="Login Name: " Style="font-weight:bold;"></RadzenLabel>
+                <InputText id="username" @bind-Value="userInput.Username" style="color:black;margin-left:10px;" />
+            </div>
+            <div style="padding-top:10px;">
+                <RadzenLabel Text="Password: " Style="font-weight:bold;"></RadzenLabel>
+                <InputText id="password" type="password" @bind-Value="userInput.Password" style="color:black;margin-left:24px;" />
+            </div>
+            <div style="text-align:center;padding-top:10px;">
+                <button type="submit">Log in</button>
+                <br />
+                <RadzenLabel id="lblMessage" Text="@message"></RadzenLabel>
+            </div>
+        </EditForm>
+    </div>
+
+</div>
+
+<style>
+    .full-screen {
+        position: fixed; /* Fixed position */
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-image: url('/logicor/images/background.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+        z-index: -1; /* Place it behind the content */
+    }
+
+    .login-form {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: rgba(255, 255, 255, 0.4); /* You might want to adjust the opacity */
+        padding: 20px;
+        border-radius: 10px;
+        color:black;
+    }
+</style>
+
+@code {
+    // Your code here
+}

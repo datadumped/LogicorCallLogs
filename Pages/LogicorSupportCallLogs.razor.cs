@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Radzen;
 using Radzen.Blazor;
+using Serilog;
 
 namespace LogicorSupportCalls.Pages
 {
@@ -38,27 +39,42 @@ namespace LogicorSupportCalls.Pages
         protected RadzenDataGrid<LogicorSupportCalls.Models.SQL2022_1033788_pnj.LogicorSupportCallLog> grid0;
         protected override async Task OnInitializedAsync()
         {
-            logicorSupportCallLogs = await SQL2022_1033788_pnjService.GetLogicorSupportCallLogs();
+            Log.Information("LogicorSupportCallLogs page: OnInitializedAsync()");
+
+            var fetchedLogs = await SQL2022_1033788_pnjService.GetLogicorSupportCallLogs();
+
+            // Sort by CallDate in descending order
+            logicorSupportCallLogs = fetchedLogs.OrderByDescending(log => log.CallDate);
         }
+
 
         protected async Task AddButtonClick(MouseEventArgs args)
         {
+            Log.Information("LogicorSupportCallLogs page: AddButtonClick()");
+
             await DialogService.OpenAsync<AddLogicorSupportCallLog>("Add LogicorSupportCallLog", null);
             await grid0.Reload();
         }
 
         protected async Task EditRow(LogicorSupportCalls.Models.SQL2022_1033788_pnj.LogicorSupportCallLog args)
         {
+            Log.Information("LogicorSupportCallLogs page: EditRow()");
+            Log.Information($"LogicorSupportCallLogs page: Id = {args.Id}");
+
             await DialogService.OpenAsync<EditLogicorSupportCallLog>("Edit LogicorSupportCallLog", new Dictionary<string, object> { {"Id", args.Id} });
         }
 
         protected async Task GridDeleteButtonClick(MouseEventArgs args, LogicorSupportCalls.Models.SQL2022_1033788_pnj.LogicorSupportCallLog logicorSupportCallLog)
         {
+            Log.Information("LogicorSupportCallLogs page: GridDeleteButtonClick()");
+
             try
             {
                 if (await DialogService.Confirm("Are you sure you want to delete this record?") == true)
                 {
                     var deleteResult = await SQL2022_1033788_pnjService.DeleteLogicorSupportCallLog(logicorSupportCallLog.Id);
+
+                    Log.Information($"GridDeleteButtonClick: deleteResult = {deleteResult}");
 
                     if (deleteResult != null)
                     {
@@ -68,6 +84,8 @@ namespace LogicorSupportCalls.Pages
             }
             catch (Exception ex)
             {
+                Log.Information($"GridDeleteButtonClick: error message = {ex.Message}");
+
                 NotificationService.Notify(new NotificationMessage
                 {
                     Severity = NotificationSeverity.Error,

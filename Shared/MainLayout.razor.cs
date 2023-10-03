@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Components.Web.Virtualization;
 using Microsoft.JSInterop;
 using Radzen;
 using Radzen.Blazor;
+using Blazored.LocalStorage;
 
 namespace LogicorSupportCalls.Shared
 {
@@ -32,11 +33,35 @@ namespace LogicorSupportCalls.Shared
         [Inject]
         protected NotificationService NotificationService { get; set; }
 
+        [Inject]
+        protected AppState AppState { get; set; }
+
+        [Inject]
+        protected ILocalStorageService LocalStorage { get; set; }
+
         private bool sidebarExpanded = true;
+
+        protected override void OnInitialized()
+        {
+            AppState.OnChange += StateHasChanged;
+            base.OnInitialized();
+        }
+
+        public void Dispose()
+        {
+            AppState.OnChange -= StateHasChanged;
+        }
 
         void SidebarToggleClick()
         {
             sidebarExpanded = !sidebarExpanded;
+        }
+
+        private async Task OnLogOutClick()
+        {
+            await LocalStorage.RemoveItemAsync("LogicorUserAuthenticated");
+
+            NavigationManager.NavigateTo("/logicor/Login");
         }
     }
 }

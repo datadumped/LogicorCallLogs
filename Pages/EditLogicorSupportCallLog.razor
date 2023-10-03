@@ -34,10 +34,10 @@
                     <RadzenLabel Text="Call Date" Component="CallDate" style="width: 100%" />
                 </RadzenColumn>
                 <RadzenColumn SizeMD="9">
-                    <RadzenDatePicker DateFormat="MM/dd/yyyy" style="display: block; width: 100%" @bind-Value="@logicorSupportCallLog.CallDate" Name="CallDate" />
+                    <RadzenDatePicker DateFormat="MM/dd/yyyy hh:mm tt" ShowTime="true" style="display: block; width: 100%" @bind-Value="@logicorSupportCallLog.CallDate" Name="CallDate" />
                 </RadzenColumn>
             </RadzenRow>
-            <RadzenRow style="margin-bottom: 1rem">
+            <RadzenRow style="margin-bottom: 1rem" Visible="false">
                 <RadzenColumn SizeMD="3">
                     <RadzenLabel Text="Call Time" Component="CallTime" style="width: 100%" />
                 </RadzenColumn>
@@ -66,7 +66,7 @@
                     <RadzenLabel Text="Issue" Component="Issue" style="width: 100%" />
                 </RadzenColumn>
                 <RadzenColumn SizeMD="9">
-                    <RadzenTextBox style="display: block; width: 100%" @bind-Value="@logicorSupportCallLog.Issue" Name="Issue" />
+                    <RadzenTextArea style="display: block; width: 100%" @bind-Value="@logicorSupportCallLog.Issue" Name="Issue" />
                 </RadzenColumn>
             </RadzenRow>
             <RadzenRow style="margin-bottom: 1rem">
@@ -74,7 +74,7 @@
                     <RadzenLabel Text="Description" Component="Description" style="width: 100%" />
                 </RadzenColumn>
                 <RadzenColumn SizeMD="9">
-                    <RadzenTextBox style="display: block; width: 100%" @bind-Value="@logicorSupportCallLog.Description" Name="Description" />
+                    <RadzenTextArea style="display: block; width: 100%" @bind-Value="@logicorSupportCallLog.Description" Name="Description" />
                 </RadzenColumn>
             </RadzenRow>
           <RadzenStack  Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.End" Gap="0.5rem">
